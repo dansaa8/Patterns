@@ -30,17 +30,17 @@ public class AgeDiffFinder {
 		}
 
 		Measure answer = measureList.get(0);
-		for (Measure result : measureList) {
+		for (Measure measure : measureList) {
 			switch (ageDifference) {
 				case CLOSEST:
-					if (result.distance < answer.distance) {
-						answer = result;
+					if (measure.distance < answer.distance) {
+						answer = measure;
 					}
 					break;
 
 				case FURTHEST:
-					if (result.distance > answer.distance) {
-						answer = result;
+					if (measure.distance > answer.distance) {
+						answer = measure;
 					}
 					break;
 			}
