@@ -1,5 +1,6 @@
 package algorithm;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class AgeDiffFinder {
@@ -12,16 +13,13 @@ public class AgeDiffFinder {
 	public Measure Find(AgeDifference ageDifference) {
 		List<Measure> measureList = new ArrayList<Measure>();
 
+		personList.sort(Comparator.comparing(Person::getBirthDate));
+
 		for (int i = 0; i < personList.size() - 1; i++) {
 			for (int j = i + 1; j < personList.size(); j++) {
 				Measure measure = new Measure();
-				if (personList.get(i).birthDate.getTime() < personList.get(j).birthDate.getTime()) {
 					measure.younger = personList.get(i);
 					measure.older = personList.get(j);
-				} else {
-					measure.younger = personList.get(j);
-					measure.older = personList.get(i);
-				}
 				measure.distance = measure.older.birthDate.getTime() - measure.younger.birthDate.getTime();
 				measureList.add(measure);
 			}
