@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class FinderTests {
 
-    Thing sue = new Thing();
-    Thing greg = new Thing();
-    Thing sarah = new Thing();
-    Thing mike = new Thing();
+    Person sue = new Person();
+    Person greg = new Person();
+    Person sarah = new Person();
+    Person mike = new Person();
 
     @BeforeEach
     public void setup() {
@@ -31,84 +31,94 @@ class FinderTests {
 
     @Test
     void Returns_Empty_Results_When_Given_Empty_List() {
-        List<Thing> list = new ArrayList<>();
-        Finder finder = new Finder(list);
+        List<Person> list = new ArrayList<>();
+        AgeDiffFinder ageDiffFinder
+                = new AgeDiffFinder(list);
 
-        F result = finder.Find(FT.One);
-        assertNull(result.P1);
+        Measure result = ageDiffFinder
+                .Find(AgeDifference.CLOSEST);
+        assertNull(result.younger);
 
-        assertNull(result.P2);
+        assertNull(result.older);
     }
 
     @Test
     void Returns_Empty_Results_When_Given_One_Person() {
-        List<Thing> list = new ArrayList<>();
+        List<Person> list = new ArrayList<>();
         list.add(sue);
 
-        Finder finder = new Finder(list);
+        AgeDiffFinder ageDiffFinder
+                = new AgeDiffFinder(list);
 
-        F result = finder.Find(FT.One);
+        Measure result = ageDiffFinder
+                .Find(AgeDifference.CLOSEST);
 
-        assertNull(result.P1);
-        assertNull(result.P2);
+        assertNull(result.younger);
+        assertNull(result.older);
     }
 
     @Test
     void Returns_Closest_Two_For_Two_People() {
-        List<Thing> list = new ArrayList<>();
+        List<Person> list = new ArrayList<>();
         list.add(sue);
         list.add(greg);
-        Finder finder = new Finder(list);
+        AgeDiffFinder ageDiffFinder = new AgeDiffFinder(list);
 
-        F result = finder.Find(FT.One);
+        Measure result = ageDiffFinder.Find(AgeDifference.CLOSEST);
 
-        assertEquals(sue, result.P1);
-        assertEquals(greg, result.P2);
+        assertEquals(sue, result.younger);
+        assertEquals(greg, result.older);
     }
 
     @Test
     void Returns_Furthest_Two_For_Two_People() {
-        List<Thing> list = new ArrayList<>();
+        List<Person> list = new ArrayList<>();
         list.add(mike);
         list.add(greg);
 
-        Finder finder = new Finder(list);
+        AgeDiffFinder ageDiffFinder
+                = new AgeDiffFinder(list);
 
-        F result = finder.Find(FT.Two);
+        Measure result = ageDiffFinder
+                .Find(AgeDifference.FURTHEST);
 
-        assertEquals(greg, result.P1);
-        assertEquals(mike, result.P2);
+        assertEquals(greg, result.younger);
+        assertEquals(mike, result.older);
     }
 
     @Test
     void Returns_Furthest_Two_For_Four_People() {
-        List<Thing> list = new ArrayList<>();
+        List<Person> list = new ArrayList<>();
         list.add(sue);
         list.add(sarah);
         list.add(mike);
         list.add(greg);
-        Finder finder = new Finder(list);
+        AgeDiffFinder ageDiffFinder
+                = new AgeDiffFinder(list);
 
-        F result = finder.Find(FT.Two);
+        Measure result = ageDiffFinder
+                .Find(AgeDifference.FURTHEST);
 
-        assertEquals(sue, result.P1);
-        assertEquals(sarah, result.P2);
+        assertEquals(sue, result.younger);
+        assertEquals(sarah, result.older);
     }
 
     @Test
     void Returns_Closest_Two_For_Four_People() {
-        List<Thing> list = new ArrayList<>();
+        List<Person> list = new ArrayList<>();
         list.add(sue);
         list.add(sarah);
         list.add(mike);
         list.add(greg);
 
-        Finder finder = new Finder(list);
+        AgeDiffFinder ageDiffFinder
+                = new AgeDiffFinder(list);
 
-        F result = finder.Find(FT.One);
+        Measure result = ageDiffFinder
+                .Find(AgeDifference.CLOSEST);
 
-        assertEquals(sue, result.P1);
-        assertEquals(greg, result.P2);
+        assertEquals(sue, result.younger);
+        assertEquals(greg, result.older);
     }
 
 }
